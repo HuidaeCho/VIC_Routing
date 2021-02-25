@@ -42,8 +42,8 @@ c     filenames allowed a maximum of 5 decimal places
       REAL JLOC, ILOC
       INTEGER NSPACE, CLEN, CLEN_OLD, DPREC, I
 
-      WRITE(JICHAR(1),'(F10.5)')JLOC
-      WRITE(JICHAR(2),'(F10.5)')ILOC
+      WRITE(JICHAR(1),'(F10.4)')JLOC
+      WRITE(JICHAR(2),'(F10.3)')ILOC
 
       CLEN_OLD=1
       DO I=1,2
@@ -52,15 +52,15 @@ c     filenames allowed a maximum of 5 decimal places
             NSPACE=NSPACE+1
             GOTO 5
          ENDIF
-         CLEN=CLEN_OLD+11-NSPACE-5+DPREC
-         EXTEN(CLEN_OLD:CLEN)=JICHAR(I)(NSPACE:5+DPREC)
+         CLEN=CLEN_OLD+11-NSPACE
+         EXTEN(CLEN_OLD:CLEN)=JICHAR(I)(NSPACE:10)
          IF(I.EQ.1)THEN
             EXTEN(CLEN:CLEN)='_'
          ENDIF
          CLEN_OLD=CLEN+1
       END DO
 
-      CLEN=CLEN-1
+      EXTEN(CLEN:CLEN)='0'
 
       RETURN
       END

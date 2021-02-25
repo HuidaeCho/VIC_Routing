@@ -98,6 +98,9 @@ c     print*, INPATH(1:INDEX(INPATH,' ')-1)//LOC(1:CLEN)//'.txt'
            print*, N, ' of',NOB,": ",
      &       INPATH(1:(INDEX(INPATH,' ')-1))//LOC(1:CLEN)//'.txt'
 c     read VIC model output: <year> <month> <day> <p> <et> <runoff> <baseflow>
+           DO I = 1,3                  !skip over header
+              READ(20,*)
+           END DO
            DO I = 1,NDAY
              READ(20,*,END=9001,ERR=9001) IYEAR(I), IMONTH(I), IDAY(I),
      &         DUM1, DUM2, RUNO(I), BASE(I)

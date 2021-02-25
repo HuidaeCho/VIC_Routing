@@ -86,17 +86,17 @@ c        convert from mm/day to ft^3/s and multiply by fraction
 
          call create_vic_names(jloc,iloc,loc,clen,dprec)
 
-c     print*, INPATH(1:INDEX(INPATH,' ')-1)//LOC(1:CLEN)
+c     print*, INPATH(1:INDEX(INPATH,' ')-1)//LOC(1:CLEN)//'.txt'
 
-         INQUIRE(FILE=INPATH(1:(INDEX(INPATH,' ')-1))//LOC(1:CLEN),
-     $                     EXIST=TORF)
+         INQUIRE(FILE=INPATH(1:(INDEX(INPATH,' ')-1))//
+     $                LOC(1:CLEN)//'.txt',EXIST=TORF)
 
          if(torf)then
            OPEN(20,FILE=INPATH(1:(INDEX(INPATH,' ')-1))//
-     $        LOC(1:CLEN),
+     $        LOC(1:CLEN)//'.txt',
      $        STATUS='OLD',ERR=9001)
            print*, N, ' of',NOB,": ",
-     &       INPATH(1:(INDEX(INPATH,' ')-1))//LOC(1:CLEN)
+     &       INPATH(1:(INDEX(INPATH,' ')-1))//LOC(1:CLEN)//'.txt'
 c     read VIC model output: <year> <month> <day> <p> <et> <runoff> <baseflow>
            DO I = 1,NDAY
              READ(20,*,END=9001,ERR=9001) IYEAR(I), IMONTH(I), IDAY(I),
@@ -112,7 +112,7 @@ c     in input file
              endif
            END DO
 	 else
-           print*, INPATH(1:(INDEX(INPATH,' ')-1))//LOC(1:CLEN),
+           print*, INPATH(1:(INDEX(INPATH,' ')-1))//LOC(1:CLEN)//'.txt',
      &             ' NOT FOUND, INSERTING ZEROS'
            miss_num = miss_num+1
 	   do i=1,nday
@@ -144,5 +144,5 @@ c     in input file
       RETURN
  9001 WRITE(*,*) 'Error reading time-series data, ',
      $     'insufficient data or missing input file',
-     $     INPATH(1:INDEX(INPATH,' ')-1)//LOC(1:CLEN)
+     $     INPATH(1:INDEX(INPATH,' ')-1)//LOC(1:CLEN)//'.txt'
       END
